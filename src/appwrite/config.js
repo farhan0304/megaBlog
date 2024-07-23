@@ -29,7 +29,7 @@ export class Service{
                 }
             )
         } catch (error) {
-            console.log("Authenticate Service :: error :: createPost")
+            console.log("Authenticate Service :: createPost :: error",error)
         }
     }
     async updatePost(slug,{title,content,featuredImage,status}){
@@ -46,7 +46,7 @@ export class Service{
                 }
             )
         } catch (error) {
-            console.log("object")
+            console.log("Authenticate Service :: updatePost :: error",error)
         }
     }
     async deletePost(slug){
@@ -58,7 +58,7 @@ export class Service{
             )
             return true
         } catch (error) {
-            console.log("object")
+            console.log("Authenticate Service :: deletePost :: error",error)
             return false;
         }
     }
@@ -71,7 +71,7 @@ export class Service{
                 slug
             )
         } catch (error) {
-            console.log("object")
+            console.log("Authenticate Service :: getPost :: error",error)
             return false
         }
     }
@@ -84,7 +84,7 @@ export class Service{
                 queries
             )
         } catch (error) {
-            console.log("object")
+            console.log("Authenticate Service :: getPosts :: error",error)
             return false
         }
     }
@@ -98,7 +98,7 @@ export class Service{
                 file
             )
         } catch (error) {
-            console.log("object")
+            console.log("Authenticate Service :: uploadFile :: error",error)
             return false
         }
     }
@@ -111,7 +111,7 @@ export class Service{
             )
             return true
         } catch (error) {
-            console.log("Appwrite")
+            console.log("Authenticate Service :: deleteFile :: error",error)
             return false
         }
     }
@@ -123,7 +123,7 @@ export class Service{
         )
     }
 
-    
+
 }
 
 

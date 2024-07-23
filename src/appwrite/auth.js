@@ -33,7 +33,7 @@ export class AuthService{
     }
     async getUser(){
         try {
-            return this.account.get();
+            return await this.account.get();
         } catch (error) {
             console.log("Authenticate service :: getUser :: Error ", error)
         }
@@ -50,6 +50,6 @@ export class AuthService{
 
 }
 
-const authService = new AuthService();
+const authservice = new AuthService();
 
-export default authService;
+export default authservice;
