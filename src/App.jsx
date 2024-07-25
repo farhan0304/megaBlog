@@ -2,38 +2,38 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { useDispatch } from 'react-redux'
 import { login,logout } from './store/authSlice';
-import authservice from './appwrite/auth'
+import authService from './appwrite/auth'
+import { Footer, Header } from './components'
+import { Outlet } from 'react-router-dom'
 function App() {
   const [loading,setLoading] = useState(true)
   const dispatch = useDispatch();
-  useEffect( () =>{
-    authservice.getUser()
+
+
+  useEffect(() => {
+    authService.getCurrentUser()
     .then((userData) => {
-      if (userData){
+      if (userData) {
         dispatch(login({userData}))
-      }else{
+      } else {
         dispatch(logout())
       }
-      setLoading(true)
     })
-    .catch((err)=>{
-      setLoading(false)
-    })
-  
-  },[])
+    .finally(() => setLoading(false))
+  }, [])
 
 
-
-  return (
-    <>
-      <div className='min-h-screen min-w-screen bg-slate-300' >
-        <h1>Mega Blog Project</h1>
-
-        {!loading ?<h1>Logged in</h1>  : <h1>Loading.........</h1> }
+  return !loading ? (
+    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+      <div className='w-full block'>
+        <Header />
+        <main>
+        <Outlet /> // changes
+        </main>
+        <Footer />
       </div>
-      
-    </>
-  )
+    </div>
+  ) : null
 }
 
 export default App
