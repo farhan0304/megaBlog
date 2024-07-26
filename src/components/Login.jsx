@@ -5,26 +5,29 @@ import authservice from '../appwrite/auth'
 import {useDispatch, useSelector} from "react-redux"
 import {Button, Input, Logo} from "./index"
 import {useForm} from "react-hook-form"
-
+import spinner from '../assets/spinnertransparent.svg'
 
 function Login() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {register, handleSubmit} = useForm()
     const [error, setError] = useState("")
+    const [loader,setLoader] = useState(false);
     const login = async(data) => {
         setError("")
+        setLoader(true)
         try {
             const session = await authservice.userLogin(data)
             if (session) {
                 const userData = await authservice.getUser()
                 // console.log(userData)
                 if(userData) dispatch(authlogin(userData));
-                
+                setLoader(false)
                 navigate("/")
             }
         } catch (error) {
             setError(error.message)
+            setLoader(false)
         }
     }
 
@@ -76,6 +79,7 @@ function Login() {
                 className="w-full"
                 >Sign in</Button>
             </div>
+            {loader && <img className='block mx-auto' src={spinner} alt="loading..." />}
         </form>
         </div>
     </div>

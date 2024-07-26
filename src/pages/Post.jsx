@@ -4,23 +4,28 @@ import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
+import spinner from '../assets/spinnertransparent.svg'
 
 export default function Post() {
     const [post, setPost] = useState(null);
     const { slug } = useParams();
     const navigate = useNavigate();
+    const [loader,setLoader] = useState(false);
 
     const userData = useSelector((state) => state.auth.userData);
     const isAuthor = post && userData ? post.userid === userData.$id : false;
 
     useEffect(() => {
+        setLoader(true)
         if (slug) {
             appwriteService.getPost(slug).then((post) => {
                 if (post) setPost(post);  
                 else navigate("/");
+                setLoader(false)
                 // console.log(post.userid)
             });
         } else navigate("/");
+        setLoader(false)
         // console.log(post)
     }, [slug, navigate]);
 
@@ -62,7 +67,9 @@ export default function Post() {
                 <div className="browser-css">
                     {parse(post.content)}
                     </div>
+                {loader && <img className='block mx-auto' src={spinner} alt="loading..." />}
+                
             </Container>
         </div>
-    ) : null;
+    ) : <img className='block mx-auto' src={spinner} alt="loading..." />
 }

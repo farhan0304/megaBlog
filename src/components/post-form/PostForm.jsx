@@ -1,11 +1,13 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Input, RTE, Select } from "../";
 import appwriteService from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import spinner from '../../assets/spinnertransparent.svg'
 
 export default function PostForm({post}) {
+    const [loader,setLoader] = useState(false);
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
             title: post?.title || "",
@@ -19,6 +21,7 @@ export default function PostForm({post}) {
     const userData = useSelector((state) => state.auth.userData);
 
     const submit = async(data) => {
+        setLoader(true)
         if (post) {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
             console.log(file)
@@ -30,7 +33,7 @@ export default function PostForm({post}) {
                 ...data,
                 featuredimage: file ? file.$id : undefined,
             });
-
+            setLoader(false)
             if (dbPost) {
                 navigate(`/post/${dbPost.$id}`);
             }
@@ -44,7 +47,7 @@ export default function PostForm({post}) {
                 data.userid = userData.$id;
                 console.log(data);
                 const dbPost = await appwriteService.createPost(data);
-
+                setLoader(false)
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`);
                 }
@@ -119,6 +122,7 @@ export default function PostForm({post}) {
                 <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
                     {post ? "Update" : "Submit"}
                 </Button>
+                {loader && <img className='block mx-auto' src={spinner} alt="loading..." />}
             </div>
         </form>
     );

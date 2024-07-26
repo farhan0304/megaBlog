@@ -5,14 +5,16 @@ import { useDispatch } from "react-redux";
 import {login as authLogin} from "../store/authSlice"
 import {Input,Button,Logo} from "./index"
 import authservice from "../appwrite/auth"
-
+import spinner from '../assets/spinnertransparent.svg'
 function Signup(){
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {register,handleSubmit} = useForm()
+    const [loader,setLoader] = useState(false);
     const [error,setError] = useState("")
     const create = async(data) => {
         setError("")
+        setLoader(true)
         try {
             const signup = await authservice.createAccount(data)
             const session = await authservice.userLogin(data)
@@ -20,9 +22,11 @@ function Signup(){
                 const userData = await authservice.getUser()
                 console.log(userData)
                 if(userData) dispatch(authLogin(userData));
+                setLoader(false)
                 navigate("/")
             }
         } catch (error) {
+            setLoader(false)
             setError(error.message)
 
         }
@@ -79,6 +83,7 @@ function Signup(){
                                 Create Account
                             </Button>
                         </div>
+                        {loader && <img className='block mx-auto' src={spinner} alt="loading..." />}
                     </form>
                 </div>
     

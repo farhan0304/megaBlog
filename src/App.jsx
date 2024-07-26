@@ -5,10 +5,12 @@ import { login,logout } from './store/authSlice';
 import authService from './appwrite/auth'
 import { Footer, Header } from './components'
 import { Outlet } from 'react-router-dom'
+import spinner from './assets/spinnertransparent.svg'
+
 function App() {
   const [loading,setLoading] = useState(true)
   const dispatch = useDispatch();
-  
+  const loader = "https://loading.io/asset/750078"
 
   useEffect(() => {
 
@@ -37,7 +39,17 @@ function App() {
         <Footer />
       </div>
     </div>
-  ) : null
+  ) : (
+    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+      <div className='w-full block'>
+        <Header />
+        <main className='flex justify-center items-center'>
+        <img src={spinner} alt="loading..." />
+        </main>
+        <Footer />
+      </div>
+    </div>
+  )
 }
 
 export default App

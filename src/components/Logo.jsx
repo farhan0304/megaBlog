@@ -1,8 +1,10 @@
 import React from 'react'
-
+import logo from '../assets/TECHNO.png'
 function Logo({width = '100px'}) {
   return (
-    <div>Logo</div>
+    <div>
+      <img style={{width}} src={logo} alt="Logo" />
+    </div>
   )
 }
 
