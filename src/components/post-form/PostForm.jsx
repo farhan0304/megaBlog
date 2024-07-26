@@ -5,7 +5,7 @@ import appwriteService from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-export default function PostForm({ post }) {
+export default function PostForm({post}) {
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
             title: post?.title || "",
@@ -18,29 +18,32 @@ export default function PostForm({ post }) {
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData);
 
-    const submit = async (data) => {
+    const submit = async(data) => {
         if (post) {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
-
+            console.log(file)
             if (file) {
-                await appwriteService.deleteFile(post.featuredImage);//add await
+                appwriteService.deleteFile(post.featuredimage);//add await
             }
 
             const dbPost = await appwriteService.updatePost(post.$id, {
                 ...data,
-                featuredImage: file ? file.$id : undefined,
+                featuredimage: file ? file.$id : undefined,
             });
 
             if (dbPost) {
                 navigate(`/post/${dbPost.$id}`);
             }
         } else {
+            // console.log(data)
             const file = await appwriteService.uploadFile(data.image[0]);
-
+            // console.log(userData)
             if (file) {
                 const fileId = file.$id;
-                data.featuredImage = fileId;
-                const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
+                data.featuredimage = fileId;
+                data.userid = userData.$id;
+                console.log(data);
+                const dbPost = await appwriteService.createPost(data);
 
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`);
@@ -101,7 +104,7 @@ export default function PostForm({ post }) {
                 {post && (
                     <div className="w-full mb-4">
                         <img
-                            src={appwriteService.getFilePreview(post.featuredImage)}
+                            src={appwriteService.getFilePreview(post.featuredimage)}
                             alt={post.title}
                             className="rounded-lg"
                         />

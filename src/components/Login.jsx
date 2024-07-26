@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Link,useNavigate} from "react-router-dom"
 import {login as authlogin} from "../store/authSlice"
 import authservice from '../appwrite/auth'
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {Button, Input, Logo} from "./index"
 import {useForm} from "react-hook-form"
 
@@ -12,14 +12,15 @@ function Login() {
     const dispatch = useDispatch()
     const {register, handleSubmit} = useForm()
     const [error, setError] = useState("")
-
     const login = async(data) => {
         setError("")
         try {
             const session = await authservice.userLogin(data)
             if (session) {
                 const userData = await authservice.getUser()
+                // console.log(userData)
                 if(userData) dispatch(authlogin(userData));
+                
                 navigate("/")
             }
         } catch (error) {
@@ -29,7 +30,7 @@ function Login() {
 
   return (
     <div
-    className='flex items-center justify-center w-full'
+    className='flex items-center justify-center w-full my-5'
     >
         <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
         <div className="mb-2 flex justify-center">
