@@ -32,7 +32,7 @@ export class Service{
             console.log("Authenticate Service :: createPost :: error",error)
         }
     }
-    async updatePost(slug,{title,content,featuredImage,status}){
+    async updatePost(slug,{title,content,featuredimage,status}){
         try {
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
@@ -41,7 +41,7 @@ export class Service{
                 {
                     title,
                     content,
-                    featuredImage,
+                    featuredimage,
                     status
                 }
             )

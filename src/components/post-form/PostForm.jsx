@@ -23,8 +23,9 @@ export default function PostForm({post}) {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
             console.log(file)
             if (file) {
-                appwriteService.deleteFile(post.featuredimage);//add await
+                await appwriteService.deleteFile(post.featuredimage);//add await
             }
+            console.log(file)
 
             const dbPost = await appwriteService.updatePost(post.$id, {
                 ...data,

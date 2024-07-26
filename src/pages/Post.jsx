@@ -11,7 +11,6 @@ export default function Post() {
     const navigate = useNavigate();
 
     const userData = useSelector((state) => state.auth.userData);
-    // const [isAuthor,setIsAuthor] = useState(false);
     const isAuthor = post && userData ? post.userid === userData.$id : false;
 
     useEffect(() => {
@@ -21,7 +20,6 @@ export default function Post() {
                 else navigate("/");
                 // console.log(post.userid)
             });
-            // setIsAuthor()
         } else navigate("/");
         // console.log(post)
     }, [slug, navigate]);
