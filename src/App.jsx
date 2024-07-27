@@ -10,7 +10,6 @@ import spinner from './assets/spinnertransparent.svg'
 function App() {
   const [loading,setLoading] = useState(true)
   const dispatch = useDispatch();
-  const loader = "https://loading.io/asset/750078"
 
   useEffect(() => {
 

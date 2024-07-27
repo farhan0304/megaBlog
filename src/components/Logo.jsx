@@ -1,6 +1,6 @@
 import React from 'react'
-import logo from '../assets/TECHNO.png'
-function Logo({width = '100px'}) {
+import logo from '../assets/logo.png'
+function Logo({width = '150px'}) {
   return (
     <div>
       <img style={{width}} src={logo} alt="Logo" />
