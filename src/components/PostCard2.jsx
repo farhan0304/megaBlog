@@ -2,6 +2,7 @@ import React from 'react'
 import service from "../appwrite/config"
 import {Link, useNavigate} from 'react-router-dom'
 
+
 function PostCard2({$id, title, featuredimage}) {
     const navigate = useNavigate()
   return (
