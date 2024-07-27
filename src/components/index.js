@@ -12,6 +12,8 @@ import Signup from "./Signup"
 import AuthLayout from "./AuthLayout"
 import RTE from "./RTE"
 import PostForm from "./post-form/PostForm"
+import Hero from "./Hero"
+import PostCard2 from "./PostCard2"
 export {
     Header,
     Footer,
@@ -26,6 +28,8 @@ export {
     Signup,
     AuthLayout,
     RTE,
-    PostForm
+    PostForm,
+    Hero,
+    PostCard2
     
 }
