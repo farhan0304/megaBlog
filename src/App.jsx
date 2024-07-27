@@ -3,7 +3,7 @@ import './App.css'
 import { useDispatch, useSelector} from 'react-redux'
 import { login,logout } from './store/authSlice';
 import authService from './appwrite/auth'
-import { Footer, Header } from './components'
+import { Footer, Header} from './components'
 import { Outlet } from 'react-router-dom'
 import spinner from './assets/spinnertransparent.svg'
 
@@ -30,17 +30,17 @@ function App() {
 
 
   return !loading ? (
-    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+    <div className='min-h-screen flex flex-wrap content-between bg-gray-200'>
       <div className='w-full block'>
         <Header />
         <main>
-        <Outlet /> // changes
+        <Outlet />
         </main>
         <Footer />
       </div>
     </div>
   ) : (
-    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+    <div className='min-h-screen flex flex-wrap content-between bg-gray-200'>
       <div className='w-full block'>
         <Header />
         <main className='flex justify-center items-center'>
